@@ -28,6 +28,7 @@ class DancingCircularList {
 
     void spin(int moves) {
         spin += moves;
+        spin %= capacity;
     }
 
     void exchange(int i, int j) {
