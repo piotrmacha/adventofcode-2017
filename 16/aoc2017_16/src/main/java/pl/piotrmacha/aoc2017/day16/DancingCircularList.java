@@ -8,8 +8,6 @@ class DancingCircularList {
     private final char[] list;
     private final Map<Character, Integer> reverseIndex;
 
-    private int spin = 0;
-
     DancingCircularList(int capacity) {
         this.capacity = capacity;
         list = new char[capacity];
@@ -17,18 +15,21 @@ class DancingCircularList {
     }
 
     void set(int index, char element) {
-        int i = unspinIndex(index);
+        int i = index % capacity;
         reverseIndex.put(element, i);
         list[i] = element;
     }
 
     char get(int index) {
-        return list[unspinIndex(index)];
+        return list[index % capacity];
     }
 
     void spin(int moves) {
-        spin += moves;
-        spin %= capacity;
+        char[] copy = new char[capacity];
+        System.arraycopy(list, 0, copy, 0, capacity);
+        for (int i = 0; i < copy.length; i++) {
+            set(i + moves, copy[i]);
+        }
     }
 
     void exchange(int i, int j) {
@@ -41,15 +42,10 @@ class DancingCircularList {
         exchange(reverseIndex.get(a), reverseIndex.get(b));
     }
 
-    private int unspinIndex(int i) {
-        return Math.floorMod(i - spin, capacity);
-    }
-
     String asString() {
         StringBuilder buffer = new StringBuilder();
-        for (int i = 0; i < list.length; i++) {
-            char c = list[unspinIndex(i)];
-            buffer.append(c);
+        for (char c : list) {
+            buffer.append(String.valueOf(c));
         }
         return buffer.toString();
     }

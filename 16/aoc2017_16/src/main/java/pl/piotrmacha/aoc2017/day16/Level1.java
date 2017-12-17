@@ -18,7 +18,7 @@ class Level1 {
             move.execute(list);
         }
 
-        list.asString();
+        System.out.println(list.asString());
     }
 
     private void fillList(DancingCircularList list) {
