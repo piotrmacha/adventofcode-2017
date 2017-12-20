@@ -2,3 +2,7 @@
 .idea/*
 *.iml
 **/target
+.idea
+build
+out
+.gradle
